@@ -24,7 +24,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Build project
-      run: dotnet build
+      run: dotnet build rustplugin1/rustplugin1.csproj
 
     - name: Deploy to Azure Functions
       uses: Azure/functions-action@v1

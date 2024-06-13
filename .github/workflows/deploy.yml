@@ -1,0 +1,33 @@
+name: Azure Function Deployment
+
+on:
+  push:
+    branches:
+      - main  # Убедитесь, что указана правильная ветка
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0.x'  # Убедитесь, что указана правильная версия .NET
+
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Build project
+      run: dotnet build
+
+    - name: Deploy to Azure Functions
+      uses: Azure/functions-action@v1
+      with:
+        app-name: 'rustplugin1'  # Убедитесь, что указано правильное имя вашего Function App
+        package: '.'
